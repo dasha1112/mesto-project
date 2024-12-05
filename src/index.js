@@ -1,3 +1,6 @@
+import './pages/index.css';
+import { initialCards } from './scripts/cards.js';
+
 // Темплейт карточки
 const cardTemplate = document
     .querySelector("#card-template")
@@ -89,6 +92,65 @@ const profileFormElement = profilePopup.querySelector('.popup__form');
 // Находим поля формы в DOM
 const nameInput = profilePopup.querySelector('.popup__input_type_name');
 const jobInput = profilePopup.querySelector('.popup__input_type_description');
+const saveButton = profileFormElement.querySelector('.popup__button'); // Кнопка "Сохранить"
+
+
+// Устанавливаем атрибуты для валидации
+nameInput.setAttribute('minlength', '2');
+nameInput.setAttribute('maxlength', '40');
+jobInput.setAttribute('minlength', '2');
+jobInput.setAttribute('maxlength', '200');
+
+// Функция для проверки состояния валидации и активации/деактивации кнопки
+function toggleSaveButton() {
+    if (profileFormElement.checkValidity()) {
+        saveButton.removeAttribute('disabled'); // Активируем кнопку
+    } else {
+        saveButton.setAttribute('disabled', true); // Деактивируем кнопку
+    }
+}
+
+function showErrorMessages() {
+    const nameError = profilePopup.querySelector('.name-error');
+    const descriptionError = profilePopup.querySelector('.description-error');
+
+    // Устанавливаем сообщение об ошибке для поля «Имя» 
+    if (!nameInput.validity.valid) {
+        if (nameInput.validity.valueMissing) {
+            nameError.textContent = "Это поле обязательно для заполнения.";
+        } else if (nameInput.validity.tooShort) {
+            nameError.textContent = "Имя должно содержать минимум 2 символа.";
+        } else if (nameInput.validity.tooLong) {
+            nameError.textContent = "Имя не должно превышать 40 символов.";
+        }
+    } else {
+        nameError.textContent = ""; // Убираем сообщение при успехе
+    }
+
+    // Устанавливаем сообщение об ошибке для поля «Занятие»
+    if (!jobInput.validity.valid) {
+        if (jobInput.validity.valueMissing) {
+            descriptionError.textContent = "Это поле обязательно для заполнения.";
+        } else if (jobInput.validity.tooShort) {
+            descriptionError.textContent = "Описание должно содержать минимум 2 символа.";
+        } else if (jobInput.validity.tooLong) {
+            descriptionError.textContent = "Описание не должно превышать 200 символов.";
+        }
+    } else {
+        descriptionError.textContent = ""; // Убираем сообщение при успехе
+    }
+}
+
+// Добавление обработчика событий для проверки ошибок во время ввода
+nameInput.addEventListener('input', () => {
+    toggleSaveButton();
+    showErrorMessages();
+});
+
+jobInput.addEventListener('input', () => {
+    toggleSaveButton();
+    showErrorMessages();
+});
 
 // Функция для заполнения полей формы данными пользователя
 function fillProfileForm() {
