@@ -57,9 +57,11 @@
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Новое место</h3>
       <form class="popup__form" name="new-place">
-        <input type="text" name="place-name" class="popup__input popup__input_type_card-name" placeholder="Название" required>
+        <input type="text" name="place-name" class="popup__input popup__input_type_card-name" placeholder="Название" required minlength="2" maxlength="30">
+        <p class="error-message name-error" style="color: red;"></p> <!-- Элемент для ошибок названия -->
         <input type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
-        <button type="submit" class="button popup__button">Сохранить</button>
+        <p class="error-message link-error" style="color: red;"></p> <!-- Элемент для ошибок ссылки -->
+        <button type="submit" class="button popup__button" disabled>Сохранить</button>
       </form>
     </div>
   </div>
