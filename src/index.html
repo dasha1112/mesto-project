@@ -6,7 +6,6 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Mesto</title>
-  <!-- <link rel="stylesheet" href="./pages/index.css"> -->
 </head>
 <body class="page">
 <div class="page__content">
@@ -16,11 +15,14 @@
   <main class="content">
     <section class="profile page__section">
       <div class="profile__image">
-        <img
+        <!-- <img
         src="<%=require('./images/avatar.jpg')%>"
         alt="Главное фото профиля"
         class="profile__image"
-      />
+      /> -->
+      <div class="profile__image" style="background-image: url('https://i.ytimg.com/vi/2vcpQo2WqyE/maxresdefault.jpg');">
+        <button class="profile__edit-avatar-button" type="button"></button>
+      </div>
       </div>
       <div class="profile__info">
         <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -39,6 +41,7 @@
       © 2021 Mesto Russia
     </p>
   </footer>
+  
   <div class="popup popup_type_edit">
     <div class="popup__content">
       <button type="button" class="popup__close"></button>
@@ -52,6 +55,20 @@
       </form>
     </div>
   </div>
+
+  <div class="popup popup_type_avatar">
+    <div class="popup__content">
+      <button type="button" class="popup__close"></button>
+      <h3 class="popup__title">Обновить аватар</h3>
+      <form class="popup__form popup__form_type_avatar" name="avatar-update" novalidate>
+        <input type="url" name="avatar" class="popup__input popup__input_type_avatar" placeholder="URL аватара" required>
+        <span class="popup__error popup__error_avatar"></span>
+        <button type="submit" class="button popup__button" data-default-text="Сохранить">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+
   <div class="popup popup_type_new-card">
     <div class="popup__content">
       <button type="button" class="popup__close"></button>
@@ -81,7 +98,10 @@
     <div class="card__description">
       <h2 class="card__title">
       </h2>
+      <div class="card__like-container">
       <button type="button" class="card__like-button"></button>
+      <p class="card__likes-count">0</p>
+        </div>
     </div>
   </li>
 </template>

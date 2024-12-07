@@ -1,6 +1,6 @@
 import './pages/index.css';
 import { initialCards } from './scripts/cards.js';
-import {updateProfile, addCard, loadCards} from './scripts/api.js';
+import {updateProfile, addCard, loadCards, updateAvatar} from './scripts/api.js';
 //import {renderCard} from './scripts/utils.js';
 // Темплейт карточки
 const cardTemplate = document
@@ -73,6 +73,8 @@ const cardSaveButton = cardFormElement.querySelector('.popup__button'); // Кн�
 // Элементы поп-апа с изображением
 const imagePopupImage = imagePopup.querySelector('.popup__image');
 const imagePopupTitle = imagePopup.querySelector('.popup__caption');
+const avatarPopup = document.querySelector('.popup_type_avatar');
+const editAvatarButton = document.querySelector('.profile__edit-avatar-button');
 
 // Находим все поп-апы
 const popups = document.querySelectorAll('.popup');
@@ -339,4 +341,24 @@ loadCards(placesList);
 // Применение стилей к поп-апам
 document.querySelectorAll('.popup').forEach((popup) => {
     popup.classList.add('popup_is-animated');
+});
+
+function handleAvatarUpdate(evt) {
+    evt.preventDefault();
+    const submitButton = evt.submitter;
+    setLoadingState(submitButton, true);
+    const avatarUrl = avatarInput.value;
+    updateAvatar(avatarUrl)
+        .then(user => {
+        profileImage.style.backgroundImage = `url('${user.avatar}')`;
+        closeModal(avatarPopup);
+        })
+        .catch(err => showError(`Ошибка обновления аватара: ${err}`))
+        .finally(() => setLoadingState(submitButton, false));
+    }
+
+    document.querySelector('.popup__form_type_avatar').addEventListener('submit', handleAvatarUpdate);
+
+editAvatarButton.addEventListener('click', () => {
+    openModal(avatarPopup);
 });

@@ -17,7 +17,6 @@ fetch(`https://nomoreparties.co/v1/${cohortId}/users/me`, {
 .then(res => res.json())
 .then(userData => {
     console.log(userData);
-    // Присвойте данные элементам на странице
     document.querySelector('.profile__title').textContent = userData.name;
     document.querySelector('.profile__description').textContent = userData.about;
     document.querySelector('.profile__image').src = userData.avatar;
@@ -102,7 +101,10 @@ export function loadCards(container) {
     .then(cards => {
         // Очищаем контейнер перед добавлением карточек
         container.innerHTML = '';
-        cards.forEach(card => {
+        // cards.forEach(card => {
+        //     renderCard(card, container); // Вызываем renderCard для каждой карточки
+        // });
+        cards.reverse().forEach(card => {
             renderCard(card, container); // Вызываем renderCard для каждой карточки
         });
     })
@@ -125,3 +127,63 @@ export function deleteCard(cardId, cardElement) {
     })
     .catch(err => console.error('Ошибка при удалении карточки:', err));
 }
+
+export function likeCard(cardId, likesCount, likeButton) {
+    fetch(`https://nomoreparties.co/v1/${cohortId}/cards/likes/${cardId}`, {
+        method: 'PUT',
+        headers: {
+            authorization: token,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error(`Ошибка: ${res.status}`);
+        }
+        return res.json();
+    })
+    .then(cardData => {
+        likesCount.textContent = cardData.likes.length; // Обновляем количество лайков
+        likeButton.classList.add('card__like-button_active'); // Подсвечиваем кнопку лайка
+    })
+    .catch(err => console.error('Ошибка при добавлении лайка:', err));
+}
+
+export function unlikeCard(cardId, likesCount, likeButton) {
+    fetch(`https://nomoreparties.co/v1/${cohortId}/cards/likes/${cardId}`, {
+        method: 'DELETE',
+        headers: {
+            authorization: token,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error(`Ошибка: ${res.status}`);
+        }
+        return res.json();
+    })
+    .then(cardData => {
+        likesCount.textContent = cardData.likes.length; // Обновляем количество лайков
+        likeButton.classList.remove('card__like-button_active'); // Убираем подсветку
+    })
+    .catch(err => console.error('Ошибка при удалении лайка:', err));
+}
+export function updateAvatar(avatarUrl) {
+    return fetch(`https://nomoreparties.co/v1/${cohortId}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify({
+        avatar: avatarUrl
+      })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Не удалось обновить аватар');
+      }
+      return response.json();
+    });
+  }
