@@ -624,16 +624,6 @@ template {
   }
 }
 
-/* .profile__image {
-  width: 120px;
-  height: 120px;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-  background-size: cover;
-  background-position: center;
-  margin: 0 29px 0 0;
-} */
 .profile__image {
   position: relative;
   width: 120px;
@@ -794,7 +784,6 @@ template {
   width: 18px;
   height: 18px;
   background: transparent url(2af49b82d305a6ea3442.svg) center no-repeat;
-  /*Потом это будет из модификатора*/
   background-size: 18px 18px;
   border: none;
   cursor: pointer;
@@ -821,7 +810,6 @@ template {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  /*Либо с точками из макета, либо этот набор свойств для эллипсиса текста в можно лучше*/
   margin: 0;
 }
 
@@ -961,10 +949,10 @@ template {
   }
 }
 .popup__button:disabled {
-  background-color: white; /* Фон для неактивной кнопки */
-  color: grey; /* Цвет текста для неактивной кнопки */
-  border: 2px solid grey; /* Серые края для неактивной кнопки */
-  cursor: not-allowed; /* Указатель показывает, что кнопка неактивна */
+  background-color: white;
+  color: grey;
+  border: 2px solid grey;
+  cursor: not-allowed;
 }
 .popup__caption {
   font-size: 12px;
