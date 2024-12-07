@@ -1,7 +1,7 @@
 import './pages/index.css';
 import { initialCards } from './scripts/cards.js';
 import {updateProfile, addCard, loadCards, updateAvatar} from './scripts/api.js';
-//import {renderCard} from './scripts/utils.js';
+
 // Темплейт карточки
 const cardTemplate = document
     .querySelector("#card-template")
@@ -19,7 +19,6 @@ function createCard(cardData) {
     cardImage.src = cardData.link;
     cardImage.alt = cardData.name;
     cardTitle.textContent = cardData.name;
-    //addCard(cardData.link, cardData.name);
 
     const deleteButton = card.querySelector(".card__delete-button");
     deleteButton.addEventListener("click", () => {
@@ -41,7 +40,6 @@ function createCard(cardData) {
 }
 // Функция удаления карточки
 function deleteCard(card) {
-    //deleteCardSer()
     card.remove();
 }
 
@@ -68,7 +66,7 @@ const profileDescription = document.querySelector('.profile__description');
 const cardFormElement = cardPopup.querySelector('.popup__form');
 const cardNameInput = cardPopup.querySelector('.popup__input_type_card-name');
 const cardLinkInput = cardPopup.querySelector('.popup__input_type_url');
-const cardSaveButton = cardFormElement.querySelector('.popup__button'); // Кнопка "Сохранить"
+const cardSaveButton = cardFormElement.querySelector('.popup__button');
 
 // Элементы поп-апа с изображением
 const imagePopupImage = imagePopup.querySelector('.popup__image');
@@ -83,16 +81,16 @@ const popups = document.querySelectorAll('.popup');
 cardNameInput.setAttribute('minlength', '2');
 cardNameInput.setAttribute('maxlength', '30');
 cardLinkInput.setAttribute('type', 'url');
-cardLinkInput.setAttribute('required', ''); // Убедимся, что это поле обязательно
+cardLinkInput.setAttribute('required', '');
 
-// Функция для проверки состояния валидации и активации/деактивации кнопки
+// Функция для проверки состояния валидации
 function toggleCardSaveButton() {
     if (cardFormElement.checkValidity()) {
-        cardSaveButton.removeAttribute('disabled'); // Активируем кнопку
-        cardSaveButton.classList.remove('inactive'); // Убираем класс неактивной
+        cardSaveButton.removeAttribute('disabled');
+        cardSaveButton.classList.remove('inactive');
     } else {
-        cardSaveButton.setAttribute('disabled', true); // Деактивируем кнопку
-        cardSaveButton.classList.add('inactive'); // Добавляем класс неактивной
+        cardSaveButton.setAttribute('disabled', true);
+        cardSaveButton.classList.add('inactive');
     }
 }
 
@@ -122,7 +120,7 @@ function showCardErrorMessages() {
             cardNameError.textContent = "Название не должно превышать 30 символов.";
         }
     } else {
-        cardNameError.textContent = ""; // Убираем сообщение при успехе
+        cardNameError.textContent = "";
     }
 
     // Устанавливаем сообщение об ошибке для поля «Ссылка на картинку»
@@ -133,14 +131,14 @@ function showCardErrorMessages() {
             cardLinkError.textContent = "Введите действительный URL.";
         }
     } else {
-        cardLinkError.textContent = ""; // Убираем сообщение при успехе
+        cardLinkError.textContent = "";
     }
 }
 
 // Функция закрытия поп-апа по Esc
 function closeByEsc(evt) {
     if (evt.key === "Escape") {
-        const openedPopup = document.querySelector('.popup_is-opened'); // Используем класс .popup_is-opened
+        const openedPopup = document.querySelector('.popup_is-opened');
         if (openedPopup) {
             closeModal(openedPopup);
         }
@@ -149,21 +147,19 @@ function closeByEsc(evt) {
 
 // Функция для открытия поп-апа
 function openModal(popup) {
-    popup.classList.add('popup_is-opened', 'popup_is-animated'); // Добавляем классы
+    popup.classList.add('popup_is-opened', 'popup_is-animated');
     setTimeout(() => {
-        popup.classList.remove('popup_is-animated'); // Убираем анимацию после открытия
-    }, 300); // Время, равное времени анимации
-      // Установка слушателя клавиатуры для закрытия по Escape
+        popup.classList.remove('popup_is-animated');
+    }, 300);
         document.addEventListener('keydown', closeByEsc);
 }
 
 // Функция для закрытия поп-апа
 function closeModal(popup) {
-    popup.classList.add('popup_is-animated'); // Добавляем класс для анимации
+    popup.classList.add('popup_is-animated');
     setTimeout(() => {
-        popup.classList.remove('popup_is-opened', 'popup_is-animated'); // Убираем классы
-    }, 300); // Время, равное времени анимации
-        // Удаление слушателя клавиатуры при закрытии поп-апа
+        popup.classList.remove('popup_is-opened', 'popup_is-animated');
+    }, 300);
         document.removeEventListener('keydown', closeByEsc);
 }
 
@@ -172,7 +168,7 @@ const profileFormElement = profilePopup.querySelector('.popup__form');
 // Находим поля формы в DOM
 const nameInput = profilePopup.querySelector('.popup__input_type_name');
 const jobInput = profilePopup.querySelector('.popup__input_type_description');
-const saveButton = profileFormElement.querySelector('.popup__button'); // Кнопка "Сохранить"
+const saveButton = profileFormElement.querySelector('.popup__button');
 
 
 // Устанавливаем атрибуты для валидации
@@ -181,12 +177,12 @@ nameInput.setAttribute('maxlength', '40');
 jobInput.setAttribute('minlength', '2');
 jobInput.setAttribute('maxlength', '200');
 
-// Функция для проверки состояния валидации и активации/деактивации кнопки
+// Функция для проверки состояния валидации
 function toggleSaveButton() {
     if (profileFormElement.checkValidity()) {
-        saveButton.removeAttribute('disabled'); // Активируем кнопку
+        saveButton.removeAttribute('disabled');
     } else {
-        saveButton.setAttribute('disabled', true); // Деактивируем кнопку
+        saveButton.setAttribute('disabled', true);
     }
 }
 
@@ -194,7 +190,6 @@ function showErrorMessages() {
     const nameError = profilePopup.querySelector('.name-error');
     const descriptionError = profilePopup.querySelector('.description-error');
 
-    // Устанавливаем сообщение об ошибке для поля «Имя» 
     if (!nameInput.validity.valid) {
         if (nameInput.validity.valueMissing) {
             nameError.textContent = "Это поле обязательно для заполнения.";
@@ -204,10 +199,9 @@ function showErrorMessages() {
             nameError.textContent = "Имя не должно превышать 40 символов.";
         }
     } else {
-        nameError.textContent = ""; // Убираем сообщение при успехе
+        nameError.textContent = "";
     }
 
-    // Устанавливаем сообщение об ошибке для поля «Занятие»
     if (!jobInput.validity.valid) {
         if (jobInput.validity.valueMissing) {
             descriptionError.textContent = "Это поле обязательно для заполнения.";
@@ -217,11 +211,10 @@ function showErrorMessages() {
             descriptionError.textContent = "Описание не должно превышать 200 символов.";
         }
     } else {
-        descriptionError.textContent = ""; // Убираем сообщение при успехе
+        descriptionError.textContent = "";
     }
 }
 
-// Добавление обработчика событий для проверки ошибок во время ввода
 nameInput.addEventListener('input', () => {
     toggleSaveButton();
     showErrorMessages();
@@ -232,20 +225,17 @@ jobInput.addEventListener('input', () => {
     showErrorMessages();
 });
 
-// Функция для заполнения полей формы данными пользователя
 function fillProfileForm() {
     nameInput.value = profileTitle.textContent;
     jobInput.value = profileDescription.textContent;
 }
 
-// Обработка кликов на кнопку редактирования профиля
 const editProfileButton = document.querySelector('.profile__edit-button');
 editProfileButton.addEventListener('click', () => {
     fillProfileForm();
     openModal(profilePopup);
 });
 
-// Обработка кликов на кнопку добавления карточки
 const addCardButton = document.querySelector('.profile__add-button');
 addCardButton.addEventListener('click', () => {
     cardNameInput.value = '';
@@ -256,7 +246,7 @@ addCardButton.addEventListener('click', () => {
 // Обработчик клика по оверлею
 popups.forEach(popup => {
     popup.addEventListener('click', (event) => {
-        if (event.target === popup) { // Проверяем, кликнули ли на оверлей
+        if (event.target === popup) {
             closeModal(popup);
         }
     });
@@ -274,17 +264,14 @@ closeButtons.forEach(button => {
 
 // Обработчик «отправки» формы профиля
 function handleProfileFormSubmit(evt) {
-    evt.preventDefault(); // Отменяем стандартную отправку формы
+    evt.preventDefault();
 
-    // Получаем значения полей
     const newName = nameInput.value;
     const newJob = jobInput.value;
 
-    // Обновляем значения на странице
     profileTitle.textContent = newName;
     profileDescription.textContent = newJob;
     updateProfile(newName, newJob);
-    // Закрываем поп-ап после сохранения
     closeModal(profilePopup);
 }
 
@@ -293,9 +280,8 @@ profileFormElement.addEventListener('submit', handleProfileFormSubmit);
 
 // Обработчик «отправки» формы добавления карточек
 function handleCardFormSubmit(evt) {
-    evt.preventDefault(); // Отменяем стандартную отправку формы
+    evt.preventDefault();
 
-    // Получаем значения из полей формы
     const newCardData = {
         name: cardNameInput.value,
         link: cardLinkInput.value
@@ -304,17 +290,15 @@ function handleCardFormSubmit(evt) {
     const cardName = cardNameInput.value;
     const cardLink = cardLinkInput.value;
 
-    // Создаем новую карточку и добавляем её в начало списка
     const newCard = createCard(newCardData);
     placesList.prepend(newCard);
     
     addCard(cardName, cardLink);
 
-    // Закрываем поп-ап и очищаем поля формы
     closeModal(cardPopup);
     cardNameInput.value = '';
     cardLinkInput.value = '';
-    showCardErrorMessages(); // Скрываем сообщения об ошибках
+    showCardErrorMessages();
 }
 
 // Прикрепляем обработчик к форме добавления карточек
@@ -338,7 +322,6 @@ function openImagePopup(title, link) {
     openModal(imagePopup);
 }
 loadCards(placesList);
-// Применение стилей к поп-апам
 document.querySelectorAll('.popup').forEach((popup) => {
     popup.classList.add('popup_is-animated');
 });

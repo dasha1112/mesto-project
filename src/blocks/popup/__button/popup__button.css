@@ -26,8 +26,8 @@
   }
 }
 .popup__button:disabled {
-  background-color: white; /* Фон для неактивной кнопки */
-  color: grey; /* Цвет текста для неактивной кнопки */
-  border: 2px solid grey; /* Серые края для неактивной кнопки */
-  cursor: not-allowed; /* Указатель показывает, что кнопка неактивна */
+  background-color: white;
+  color: grey;
+  border: 2px solid grey;
+  cursor: not-allowed;
 }

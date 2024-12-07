@@ -3,13 +3,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    entry: './src/index.js', // Входная точка
+    entry: './src/index.js',
     output: {
         filename: 'main.js',
         path: path.resolve(__dirname, 'dist'),
-        clean: true, // Чистить папку dist перед каждой сборкой
+        clean: true,
     },
-    mode: 'development', // Изменить на 'production' при сборке для продакшена
+    mode: 'development',
     module: {
         rules: [
             {
@@ -24,19 +24,19 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'], // Для обработки CSS
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
                 sideEffects: true,
             },
             {
                 test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
-                type: 'asset/resource', // Для обработки изображений и шрифтов
+                type: 'asset/resource',
             },
         ],
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html', // Используем шаблон
-            inject: true, // Автоматически добавлять скрипт в HTML
+            template: './src/index.html',
+            inject: true,
         }),
         new MiniCssExtractPlugin({
             filename: '[name].css',
